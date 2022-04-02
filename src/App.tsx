@@ -1,25 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import { NeumorphismContainer } from "./styles/common.styles";
+import useBackgroundColor from "./hooks/useBackgroundColor";
+import { BgColorContext } from "./context/BgColorContext";
+import Button from "./components/Button";
 
 function App() {
+  useBackgroundColor("#bf7272");
+  const bgColor = useBackgroundColor();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <BgColorContext.Provider value={bgColor}>
+      <div className="App">
+        <NeumorphismContainer
+          width="50vw"
+          height="50vh"
+          bgColor={bgColor}
+          borderRadius="10px"
+          style={{ margin: "200px", padding: "20px" }}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <Button style={{ color: "#2e2c2c" }} size="default">
+            Button
+          </Button>
+        </NeumorphismContainer>
+      </div>
+    </BgColorContext.Provider>
   );
 }
 

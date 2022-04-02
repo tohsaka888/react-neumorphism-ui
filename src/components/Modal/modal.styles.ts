@@ -8,4 +8,5 @@ export const ModalMain = styled.div`
   left: 0;
   padding: 16px;
   text-align: left;
+  z-index: 100;
 `;

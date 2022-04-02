@@ -6,7 +6,7 @@ type Props = {
   children?: React.ReactNode;
   style?: CSSProperties;
   size?: "small" | "default" | "large";
-};
+} & React.HTMLAttributes<HTMLDivElement>;
 
 const sizes = {
   default: {

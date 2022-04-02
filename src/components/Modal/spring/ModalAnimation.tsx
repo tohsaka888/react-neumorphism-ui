@@ -18,9 +18,7 @@ function ModalAnimation({ children }: Props) {
       if (modalProps?.visible) {
         await next({
           transform: "scale(1.3)",
-          config: {
-            duration: 100,
-          },
+          config: config.stiff
         });
       }
       await next({

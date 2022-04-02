@@ -1,5 +1,5 @@
-import React, { useContext, useState } from "react";
-import { animated, useSpring } from "react-spring";
+import React, { useContext } from "react";
+import { animated, config, useSpring } from "react-spring";
 import { CSSProperties } from "styled-components";
 import { ModalContext } from "../../../context/ModalContext";
 
@@ -25,7 +25,8 @@ function ModalAnimation({ children }: Props) {
       }
       await next({
         opacity: modalProps?.visible ? 1 : 0,
-        transform: modalProps?.visible ? "scale(1)" : "scale(0)",
+        transform: modalProps?.visible ? "scale(1)" : "scale(0.5)",
+        config: config.gentle,
       });
     },
   });

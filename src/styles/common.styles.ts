@@ -16,12 +16,15 @@ export const calcBoxShadow = (
   const height_number = height.match(/\d+(\.\d+)?/g) || "0";
   const height_unit = height.match(/[^\d.]/g) || [];
   const shadow_height = +height_number[0] / 10 + height_unit.join("");
+  const width_number = width.match(/\d+(\.\d+)?/g) || "0";
+  const width_unit = width.match(/[^\d.]/g) || [];
+  const shadow_width = +width_number[0] / 10 + width_unit.join("");
   const shadow_area = +height_number[0] / 5 + height_unit.join("");
   const shallow_shadow_color =
     "#" + (parseInt(hex_color_string, 16) - parseInt("80808", 16)).toString(16);
   const deep_shadow_color =
     "#" + (parseInt(hex_color_string, 16) + parseInt("80808", 16)).toString(16);
-  return `${shadow_height} ${shadow_height} ${shadow_area} ${shallow_shadow_color}, -${shadow_height} -${shadow_height} ${shadow_area} ${deep_shadow_color}`;
+  return `${shadow_width} ${shadow_height} ${shadow_area} ${shallow_shadow_color}, -${shadow_width} -${shadow_height} ${shadow_area} ${deep_shadow_color}`;
 };
 
 export const NeumorphismContainer = styled.div<NeumorphismProps>`

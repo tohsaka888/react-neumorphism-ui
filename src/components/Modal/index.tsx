@@ -6,6 +6,7 @@ import { ModalMain } from "./modal.styles";
 import ModalAnimation from "./spring/ModalAnimation";
 import { BsX } from "react-icons/bs";
 import Button from "../Button";
+import ReactDOM from "react-dom";
 
 type Props = {
   visible: boolean;
@@ -15,13 +16,16 @@ type Props = {
   onClose: () => void;
 };
 
+const el = document.createElement("div");
+document.body.appendChild(el);
+
 function Modal({ children, ...props }: Props) {
   const bgColor = useContext(BgColorContext);
   const [visible, setVisible] = useState<boolean>(false);
   useEffect(() => {
     setVisible(props.visible);
   }, [props.visible]);
-  return (
+  return ReactDOM.createPortal(
     <ModalContext.Provider value={{ ...props, visible }}>
       <ModalAnimation>
         <NeumorphismContainer
@@ -29,7 +33,12 @@ function Modal({ children, ...props }: Props) {
           height={props.height + "px"}
           borderRadius="10px"
           bgColor={bgColor as string}
-          style={{ backdropFilter: "blur(50px)", opacity: 0.7 }}
+          style={{
+            backdropFilter: "blur(50px)",
+            zIndex: 90,
+            position: "relative",
+            backgroundColor: `${(bgColor as string) + 70}`,
+          }}
         >
           <ModalMain>{children}</ModalMain>
           <Button
@@ -42,13 +51,15 @@ function Modal({ children, ...props }: Props) {
               position: "absolute",
               right: 10,
               top: 10,
+              zIndex: 100,
             }}
           >
             <BsX size={40} />
           </Button>
         </NeumorphismContainer>
       </ModalAnimation>
-    </ModalContext.Provider>
+    </ModalContext.Provider>,
+    el
   );
 }
 

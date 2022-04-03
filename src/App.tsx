@@ -1,25 +1,18 @@
 import React, { useState } from "react";
 import "./App.css";
-import useBackgroundColor from "./hooks/useBackgroundColor";
-import { BgColorContext } from "./context/BgColorContext";
 import Button from "./components/Button";
 import Modal from "./components/Modal";
-import useTheme from "./hooks/useTheme";
+import ThemeProvider from "./components/ThemeProvider/Index";
 
 function App() {
-  useBackgroundColor("#d08383");
-  const bgColor = useBackgroundColor();
   const [visible, setVisible] = useState<boolean>(false);
-  const theme = useTheme();
   return (
-    <BgColorContext.Provider value={bgColor}>
+    <ThemeProvider bgColor="#3b2323">
       <div className="App">
         <Button
-          style={{ color: "#ffffff" }}
           size="default"
           onClick={() => {
             setVisible(true);
-            console.log(theme);
           }}
         >
           Button
@@ -30,7 +23,6 @@ function App() {
             fontSize: "3rem",
             verticalAlign: "middle",
             marginTop: "200px",
-            backgroundColor: "#ffffff",
             textAlign: "center",
             width: "500px",
             marginLeft: "auto",
@@ -47,10 +39,10 @@ function App() {
             setVisible(false);
           }}
         >
-          <div style={{ color: "white", fontSize: "2rem" }}>Modal</div>
+          <div style={{ fontSize: "2rem" }}>Modal</div>
         </Modal>
       </div>
-    </BgColorContext.Provider>
+    </ThemeProvider>
   );
 }
 

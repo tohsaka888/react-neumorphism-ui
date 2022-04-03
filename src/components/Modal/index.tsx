@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { BgColorContext } from "../../context/BgColorContext";
 import { ModalContext } from "../../context/ModalContext";
 import { NeumorphismContainer } from "../../styles/common.styles";
@@ -22,9 +22,24 @@ document.body.appendChild(el);
 function Modal({ children, ...props }: Props) {
   const bgColor = useContext(BgColorContext);
   const [visible, setVisible] = useState<boolean>(false);
+  const modalRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     setVisible(props.visible);
-  }, [props.visible]);
+    if (props.visible) {
+      const body = document.querySelector("body");
+      if (body) {
+        body.style.overflow = "hidden";
+        document.onmouseup = (e) => {
+          if (
+            e.target !== modalRef.current &&
+            !modalRef.current?.contains(e.target as Node)
+          ) {
+            props.onClose();
+          }
+        };
+      }
+    }
+  }, [props, props.visible]);
   return ReactDOM.createPortal(
     <ModalContext.Provider value={{ ...props, visible }}>
       <ModalAnimation>
@@ -34,13 +49,12 @@ function Modal({ children, ...props }: Props) {
           borderRadius="10px"
           bgColor={bgColor as string}
           style={{
-            backdropFilter: "blur(50px)",
-            zIndex: 90,
             position: "relative",
             backgroundColor: `${(bgColor as string) + 70}`,
+            zIndex: 100,
           }}
         >
-          <ModalMain>{children}</ModalMain>
+          <ModalMain ref={modalRef}>{children}</ModalMain>
           <Button
             size="small"
             onClick={props.onClose}
@@ -52,6 +66,7 @@ function Modal({ children, ...props }: Props) {
               right: 10,
               top: 10,
               zIndex: 100,
+              color: "inherit",
             }}
           >
             <BsX size={40} />

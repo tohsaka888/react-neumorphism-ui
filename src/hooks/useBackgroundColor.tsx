@@ -11,25 +11,21 @@ function useBackgroundColor(bgColor?: string): string {
     return "#" + hexArr.join("");
   }, []);
   useEffect(() => {
-    if (bgColor) {
-      const el = document.querySelector("body");
-      if (el) {
-        el.style.background = bgColor;
-      }
-    } else {
-      const el = document.querySelector("body");
-      if (el) {
-        let bodyBgColor = el.style.background;
-        if (bodyBgColor.includes("rgb")) {
-          const rgb = bodyBgColor.match(/\d+(\.\d+)?/g)?.slice(0, 3);
-          setWndowBgColor(rgbToHex(rgb as string[]));
-        } else {
-          setWndowBgColor(bodyBgColor);
-        }
+    const el = document.querySelector("body") as HTMLElement;
+    if (el && bgColor) {
+      el.style.background = bgColor;
+    }
+    if (el) {
+      let bodyBgColor = el.style.background;
+      if (bodyBgColor.includes("rgb")) {
+        const rgb = bodyBgColor.match(/\d+(\.\d+)?/g)?.slice(0, 3);
+        setWndowBgColor(rgbToHex(rgb as string[]));
+      } else {
+        setWndowBgColor(bodyBgColor);
       }
     }
   }, [bgColor, rgbToHex]);
-  return bgColor ? "" : windowBgColor;
+  return windowBgColor;
 }
 
 export default useBackgroundColor;

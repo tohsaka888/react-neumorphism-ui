@@ -52,6 +52,7 @@ function Modal({ children, ...props }: Props) {
             position: "relative",
             backgroundColor: `${(bgColor as string) + 70}`,
             zIndex: 100,
+            // color: theme === "dark" ? windowColor?.dark : windowColor?.light,
           }}
         >
           <ModalMain ref={modalRef}>{children}</ModalMain>

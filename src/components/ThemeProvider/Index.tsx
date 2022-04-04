@@ -17,7 +17,7 @@ function ThemeProvider({ children, ...props }: Props) {
   const windowColor = useWindowColor({ light: "#000000", dark: "#ffffff" });
   return (
     <BgColorContext.Provider value={bgColor}>
-      <ThemeContext.Provider value={null}>
+      <ThemeContext.Provider value={{ theme, windowColor }}>
         <ThemeContainer theme={theme} windowColor={windowColor}>
           {children}
         </ThemeContainer>
